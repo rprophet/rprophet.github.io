@@ -197,6 +197,7 @@ function formatboard(){
 	for(n=0;n<smovea.length;n++){
 		rid("clk"+smovea[n][0]).className="pointer";
 	}
+	
 }
 function printboard(){
 	for(n=0;n<50;n++){
@@ -409,8 +410,8 @@ function makepeatmove(clr,sf,ss){
 	for(var n=0;n<peata[ss].length;n++){
 		if(boarda[peata[ss][n][0]]*clr<0&&boarda[peata[ss][n][1]]==0&&peata[ss][n][1]!=sf){
 			isnorepeat=true;
-			for(var m=0;m<amove.length-1;m++){
-				if(amove[m]==amove[amove.length-1]&&amove[m+1]==peata[ss][n][1]){
+			for(var m=0;m<aestone.length;m++){
+				if(aestone[m]==peata[ss][n][0]){
 					isnorepeat=false;
 					break;
 				}
@@ -488,9 +489,8 @@ function makekeatmove(clr,sd,ss){
 				if(afteres){
 					if(boarda[kmovea[ss][n][m]]==0){
 						isnorepeat=true;
-						for(var x=0;x<amove.length-1;x++){
-							if(amove[x]==amove[amove.length-1]&&amove[x+1]==kmovea[ss][n][m]){
-								
+						for(var x=0;x<aestone.length;x++){
+							if(aestone[x]==es){
 								isnorepeat=false;
 								break;
 							}
