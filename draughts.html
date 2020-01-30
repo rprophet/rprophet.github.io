@@ -175,9 +175,11 @@ var estep=0;
 var clkeata=[];
 var cestep=0;
 var sboarda=[];
-var sdeep=4;
+var sdeep=5;
 var clkbm=1;
 var gamestep=0;
+var spoint=0;
+var cuttime=0;
 function rid(id) {
 	return document.getElementById(id);
 }
@@ -357,7 +359,9 @@ function upplay(){
 		}else if(smovea.length==1){
 			nowmove=[smovea[0].concat(),[]];
 		}else{
-			searchmove(0);
+			spoint=0;
+			cuttime=0;
+			searchmove(0,10000,-10000);
 		}
 	}
 	domove();
@@ -578,7 +582,6 @@ function makekeatmove(clr,sd,ss){
 							for(var y=0;y<estone1.length;y++){
 								if(estone1[y]!=estone2[y]){
 									samees=false;
-									///alert("ok")
 									break;
 								}
 							}
@@ -649,7 +652,9 @@ function randommove(){
 		return [];
 	}
 }
-function searchmove(sdp){
+function searchmove(sdp,smax,smin){
+	var nsmax=smax;
+	var nsmin=smin;
 	
 	makemove();
 	if(semovea.length==0&&smovea.length==0){
@@ -657,7 +662,6 @@ function searchmove(sdp){
 		
 	}else if(sdp>=sdeep){
 		gv=gamevalue();
-		
 		return gv;
 	}else{
 		if(semovea.length!=0){
@@ -678,7 +682,6 @@ function searchmove(sdp){
 			
 		}
 		for(var n=0;n<shmovea.length;n++){
-			
 			boarda[shmovea[n][shmovea[n].length-1]]=boarda[shmovea[n][0]];
 			boarda[shmovea[n][0]]=0;
 			
@@ -697,24 +700,37 @@ function searchmove(sdp){
 				
 			}
 			
-			gvalue=searchmove(sd);
-			
+			gvalue=searchmove(sd,nsmax,nsmin);
 			boarda=sboarda[sboarda.length-1].concat();
 			
 			if(nowplay>0){
-				if(gvalue<mvalue){
+				if(gvalue<nsmin){
 					mvalue=gvalue;
-					moven=n;
+					break;
+				}else{
+					if(gvalue<mvalue){
+						mvalue=gvalue;
+						nsmax=mvalue;
+						moven=n;
+					}
 				}
+				
 			}else{
-				if(gvalue>mvalue){
+				if(gvalue>nsmax){
 					mvalue=gvalue;
-					moven=n;
+					break;
+				}else{
+					if(gvalue>mvalue){
+						mvalue=gvalue;
+						nsmin=mvalue;
+						moven=n;
+					}
 				}
 			}
-			//alert(mvalue);
+			
 	
 		}
+		
 		nowplay*=-1;
 		sboarda.pop();
 		if(sdp==0){
