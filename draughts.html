@@ -362,6 +362,7 @@ function upplay(){
 			spoint=0;
 			cuttime=0;
 			searchmove(0,10000,-10000);
+			
 		}
 	}
 	domove();
@@ -676,7 +677,7 @@ function searchmove(sdp,smax,smin){
 		var mvalue=nowplay*10000;
 		var moven=-1;
 		var sd=sdp;
-		if(semovea.length!=1){
+		if(semovea.length==0){
 			sd++;
 		}else{
 			
