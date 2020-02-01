@@ -175,7 +175,7 @@ var estep=0;
 var clkeata=[];
 var cestep=0;
 var sboarda=[];
-var sdeep=5;
+var sdeep=6;
 var clkbm=1;
 var gamestep=0;
 var spoint=0;
@@ -199,7 +199,6 @@ function formatboard(){
 	for(n=0;n<smovea.length;n++){
 		rid("clk"+smovea[n][0]).className="pointer";
 	}
-	
 	
 }
 function printboard(){
@@ -362,7 +361,6 @@ function upplay(){
 			spoint=0;
 			cuttime=0;
 			searchmove(0,10000,-10000);
-			
 		}
 	}
 	domove();
@@ -656,7 +654,6 @@ function randommove(){
 function searchmove(sdp,smax,smin){
 	var nsmax=smax;
 	var nsmin=smin;
-	
 	makemove();
 	if(semovea.length==0&&smovea.length==0){
 		return nowplay*-5000;
@@ -677,7 +674,7 @@ function searchmove(sdp,smax,smin){
 		var mvalue=nowplay*10000;
 		var moven=-1;
 		var sd=sdp;
-		if(semovea.length!=1){
+		if(semovea.length<1){
 			sd++;
 		}else{
 			
@@ -707,6 +704,7 @@ function searchmove(sdp,smax,smin){
 			if(nowplay>0){
 				if(gvalue<nsmin){
 					mvalue=gvalue;
+					moven=n;
 					break;
 				}else{
 					if(gvalue<mvalue){
@@ -719,6 +717,7 @@ function searchmove(sdp,smax,smin){
 			}else{
 				if(gvalue>nsmax){
 					mvalue=gvalue;
+					moven=n;
 					break;
 				}else{
 					if(gvalue>mvalue){
@@ -734,6 +733,7 @@ function searchmove(sdp,smax,smin){
 		
 		nowplay*=-1;
 		sboarda.pop();
+		
 		if(sdp==0){
 			if(ssestonea.length!=0){
 				nowmove=[shmovea[moven].concat(),ssestonea[moven].concat()];
@@ -1007,5 +1007,6 @@ function changestoneimg(){
 <div id="foot">
 <img src="images/copy.png">
 </div>
+	<div id="out"></div>
 </body>
 </html>
