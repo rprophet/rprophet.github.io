@@ -197,7 +197,7 @@ var estep=0;
 var clkeata=[];
 var cestep=0;
 var sboarda=[];
-var sdeep=6;
+var sdeep=5;
 var clkbm=1;
 var gamestep=0;
 var spoint=0;
@@ -221,6 +221,7 @@ function formatboard(){
 	for(n=0;n<smovea.length;n++){
 		rid("clk"+smovea[n][0]).className="pointer";
 	}
+	
 }
 function printboard(){
 	for(n=0;n<50;n++){
@@ -687,9 +688,11 @@ function searchmove(sdp,smax,smin){
 		return nowplay*-5000;
 		
 	}else if(sdp>=sdeep){
-		gv=gamevalue();
-		return gv;
-	}else{
+		if(semovea.length==0){
+			gv=gamevalue();
+			return gv;
+		}
+	}
 		if(semovea.length!=0){
 			var shmovea=semovea.concat(); 
 		}else{
@@ -772,7 +775,6 @@ function searchmove(sdp,smax,smin){
 			
 		}
 		return mvalue;
-	}
 	
 }
 function gamevalue(){
