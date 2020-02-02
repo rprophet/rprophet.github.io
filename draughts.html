@@ -12,6 +12,7 @@ stoneclr=["stonew.png","stonebl.png"];
 stonekclr=["stonekw.png","stonekbl.png"];
 wmoveimg="stonem.png";
 estoneimg=["stonewe.png","stoneble.png"];
+ekstoneimg=["stonekwe.png","stonekble.png"];
 var sltstone=-1
 var ustonea=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 var peata=[[[6,11]],
@@ -163,7 +164,28 @@ var kmovea=[[[6,11,17,22,28,33,39,44],[5],[],[]],
 			[[],[],[41,37,32,28,23,19,14],[40,35]],
 			[[],[],[42,38,33,29,24],[41,36,30,25]],
 			[[],[],[43,39,34],[42,37,31,26,20,15]],
-			[[],[],[44],[43,38,32,27,21,16,10,5]]]; 	
+			[[],[],[44],[43,38,32,27,21,16,10,5]]];
+var boardvd=[9,9,9,9,9,
+			9,9,9,9,9,
+			8,9,9,9,8,
+			7,8,9,9,7,
+			6,8,9,7,6,
+			5,6,8,7,5,
+			4,6,6,5,4,
+			3,4,4,4,3,
+			2,2,2,2,2,
+			0,0,0,0,0];
+
+var boardvu=[0,0,0,0,0,
+			-2,-2,-2,-2,-2,
+			-3,-4,-4,-4,-3,
+			-4,-5,-6,-6,-4,
+			-5,-7,-8,-6,-5,
+			-6,-7,-9,-8,-6,
+			-7,-9,-9,-8,-7,
+			-8,-9,-9,-9,-8,
+			-9,-9,-9,-9,-9,
+			-9,-9,-9,-9,-9]; 
 var smovea=[];
 var semovea=[];
 var sestonea=[];
@@ -199,7 +221,6 @@ function formatboard(){
 	for(n=0;n<smovea.length;n++){
 		rid("clk"+smovea[n][0]).className="pointer";
 	}
-	
 }
 function printboard(){
 	for(n=0;n<50;n++){
@@ -223,6 +244,13 @@ function printboard(){
 			}
 			else if(boarda[n]==-500){
 				rid("stn"+n).innerHTML='<img src="images/'+estoneimg[1]+'">';
+				rid("shd"+n).innerHTML='<img src="images/shadow.png">';
+			}else if(boarda[n]==5000){
+				rid("stn"+n).innerHTML='<img src="images/'+ekstoneimg[0]+'">';
+				rid("shd"+n).innerHTML='<img src="images/shadow.png">';
+			}
+			else if(boarda[n]==-5000){
+				rid("stn"+n).innerHTML='<img src="images/'+ekstoneimg[1]+'">';
 				rid("shd"+n).innerHTML='<img src="images/shadow.png">';
 			}else if(boarda[n]==1000){
 				rid("stn"+n).innerHTML='<img src="images/'+wmoveimg+'">';
@@ -743,7 +771,6 @@ function searchmove(sdp,smax,smin){
 			mstep=shmovea[moven].length-1;
 			
 		}
-		
 		return mvalue;
 	}
 	
@@ -762,16 +789,16 @@ function gamevalue(){
 				}
 			}
 			if(boarda[n]==1){
-				v3+=9-Math.floor(n/5);
+				v3+=boardvd[n];
 			}else{
-				v3+=-Math.floor(n/5);
+				v3+=boardvu[n];
 			}
 			
 		}else if(boarda[n]==10||boarda[n]==-10){
 			v2+=kmovea[n][0].length+kmovea[n][1].length+kmovea[n][2].length+kmovea[n][3].length;
 		}
 	}
-	v1=v1*10;
+	v1=v1*20;
 	
 	return v1+v2+v3;
 }
@@ -824,7 +851,7 @@ function eatmove(){
 }
 function cleaneatstone(){
 	for(n=0;n<50;n++){
-		if(boarda[n]==500||boarda[n]==-500){
+		if(boarda[n]==500||boarda[n]==-500||boarda[n]==5000||boarda[n]==-5000){
 			boarda[n]=0;
 			
 		}
@@ -832,10 +859,14 @@ function cleaneatstone(){
 	printboard();
 }
 function eatstone(es){
-	if(boarda[es]>0){
+	if(boarda[es]==1){
 		boarda[es]=500;
-	}else{
+	}else if(boarda[es]==-1){
 		boarda[es]=-500;
+	}else if(boarda[es]==10){
+		boarda[es]=5000;
+	}else if(boarda[es]==-10){
+		boarda[es]=-5000;
 	}
 	
 	printboard();
@@ -986,10 +1017,12 @@ function changestoneimg(){
 	   stoneclr=["stonebl.png","stonew.png"];
 	    stonekclr=["stonekbl.png","stonekw.png"];
 	   	estoneimg=["stoneble.png","stonewe.png"];
+		ekstoneimg=["stonekble.png","stonekwe.png"];
 	}else{
 		stoneclr=["stonew.png","stonebl.png"];
 	    stonekclr=["stonekw.png","stonekbl.png"];
 	   	estoneimg=["stonewe.png","stoneble.png"];
+		ekstoneimg=["stonekwe.png","stonekble.png"];
 	}
 	
 }
